@@ -19,10 +19,10 @@ const sectionSchema = new mongoose.Schema({
 const Section = mongoose.model('Section', sectionSchema);
 
 function validateSection(section) {
-    const schema = {
+    const schema = Joi.object({
       name: Joi.string().min(5).max(50).required()
-    };
-    return Joi.validate(section, schema);
+    });
+    return schema.validate(section);
 }
 
   exports.Section = Section; 

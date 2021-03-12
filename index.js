@@ -15,15 +15,19 @@ const teacherLogin = require('./routes/teacherLogin');
 const teachers = require('./routes/teachers');
 var mongoDBPassword, PORT;
 
-//SETTING MONGODBPASSWORD FROM ENV
+//SETTING MONGODBPASSWORD, JWTPRIVATEKEY FROM ENV
 if(!(mongoDBPassword = config.get('mongoDBPassword'))){
     console.error('FATAL ERROR: MongoDB Password is not defined');
+    process.exit(1);
+}
+if(!(mongoDBPassword = config.get('jwtPrivateKey'))){
+    console.error('FATAL ERROR: jwtPrivateKey is not defined');
     process.exit(1);
 }
 //CONNECTING TO MONGODB ATLAS
 const uri= `mongodb+srv://admin:${mongoDBPassword}@edulite.g3lzb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 try {
-mongoose.connect(uri,{ useNewUrlParser: true, useUnifiedTopology: true }, () => debug("Connected to MongoDB Atlas"))
+mongoose.connect(uri,{ useCreateIndex:true, useNewUrlParser: true, useUnifiedTopology: true }, () => debug("Connected to MongoDB Atlas"))
 }
 catch (ex){
     console.log(ex);
@@ -32,7 +36,7 @@ catch (ex){
  //USING MIDDLEWARES AND ROUTES
 app.use(express.json());
 app.use('/api/adminlogin',adminLogin);
-app.use('/api/admadminLoginins',admins);
+app.use('/api/admins',admins);
 app.use('/api/teacherlogin',teacherLogin);
 app.use('/api/studentlogin',studentLogin);
 app.use('/api/teachers',teachers);

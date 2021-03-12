@@ -21,10 +21,10 @@ const meetingSchema = new mongoose.Schema({
 const Meeting = mongoose.model('Meeting', meetingSchema);
 
 function validateMeeting(meeting) {
-    const schema = {
+    const schema = Joi.object({
       name: Joi.string().min(5).max(255).required()
-    };
-    return Joi.validate(meeting, schema);
+    });
+    return schema.validate(meeting);
 }
 
   exports.Meeting = Meeting; 

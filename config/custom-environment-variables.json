@@ -1,4 +1,5 @@
 {
     "mongoDBPassword" : "mongoDBPassword",
-    "PORT" : "PORT"
+    "PORT" : "PORT",
+    "jwtPrivateKey" : "jwtPrivateKey"
 }

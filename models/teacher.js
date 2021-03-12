@@ -25,12 +25,12 @@ const teacherSchema = new mongoose.Schema({
 const Teacher = mongoose.model('Teacher', teacherSchema);
 
 function validateTeacher(teacher) {
-    const schema = {
+    const schema = Joi.object({
         name: Joi.string().min(5).max(50).required(),
         email: Joi.string().min(5).max(255).required().email(),
         password: Joi.string().min(5).max(255).required()
-    };
-    return Joi.validate(teacher, schema);
+    });
+    return schema.validate(teacher);
 }
 
   exports.Teacher = Teacher; 
