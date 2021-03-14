@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const config = require('config');
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 
 const studentSchema = new mongoose.Schema({
     name: {
@@ -22,6 +24,10 @@ const studentSchema = new mongoose.Schema({
         maxlength: 1024
     }
 });
+studentSchema.methods.generateAuthToken = function() { 
+    const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
+    return token;
+  }
 const Student = mongoose.model('Student', studentSchema);
 
 function validateStudent(student) {

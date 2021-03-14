@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
+const {sectionSchema} = require('../models/section');
+const {meetingSchema} = require('../models/meeting');
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const teacherSchema = new mongoose.Schema({
     name: {
@@ -20,8 +24,18 @@ const teacherSchema = new mongoose.Schema({
         required: true,
         minlength: 5,
         maxlength: 1024
+    },
+    sectionList: {
+        type: [sectionSchema]
+    },
+    meetingList: {
+        type: [meetingSchema]
     }
 });
+teacherSchema.methods.generateAuthToken = function() { 
+    const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
+    return token;
+  }
 const Teacher = mongoose.model('Teacher', teacherSchema);
 
 function validateTeacher(teacher) {

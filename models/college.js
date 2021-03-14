@@ -9,7 +9,9 @@ const collegeSchema = new mongoose.Schema({
     required: true,
     minlength: 5,
     maxlength: 255,
-    unique: true
+    unique: true,
+    trim: true,
+    lowercase: true
   },
   sectionList: {
     type: [sectionSchema]
