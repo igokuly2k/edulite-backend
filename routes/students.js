@@ -2,9 +2,11 @@ const { Student, validate } = require('../models/student');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
+const { auth } = require('../middlewares/auth');
+const { adminAuth } = require('../middlewares/adminAuth');
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', [auth, adminAuth], async (req, res) => {
     try {
         const { error } = validate(req.body);
         if (error) return res.status(400).send(error.details[0].message);

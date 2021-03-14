@@ -33,7 +33,7 @@ const teacherSchema = new mongoose.Schema({
     }
 });
 teacherSchema.methods.generateAuthToken = function() { 
-    const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'));
+    const token = jwt.sign({ _id: this._id, isTeacher: true }, config.get('jwtPrivateKey'));
     return token;
   }
 const Teacher = mongoose.model('Teacher', teacherSchema);
