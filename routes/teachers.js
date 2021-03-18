@@ -33,7 +33,7 @@ router.get('/', auth, async(req,res) => {
     res.send(teachers);
     }
     else if(req.user.isTeacher == true){
-        const teacherInfo = await Teacher.findById(req.user._id);
+        const teacherInfo = await Teacher.findById(req.user._id,'-password');
         res.send(teacherInfo);
     }
 });

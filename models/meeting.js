@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Joi = require('joi');
 
 const meetingSchema = new mongoose.Schema({
     name: {
@@ -8,9 +7,13 @@ const meetingSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 50
     },
-    startDate: {
-        type: Date,
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: "Teacher",
         required: true
+    },
+    startDate: {
+        type: Date
     },
     status: {
         type: String,
@@ -20,13 +23,5 @@ const meetingSchema = new mongoose.Schema({
 });
 const Meeting = mongoose.model('Meeting', meetingSchema);
 
-function validateMeeting(meeting) {
-    const schema = Joi.object({
-      name: Joi.string().min(5).max(255).required()
-    });
-    return schema.validate(meeting);
-}
-
-  exports.Meeting = Meeting; 
-  exports.meetingSchema = meetingSchema;
-  exports.validate = validateMeeting;
+exports.Meeting = Meeting; 
+exports.meetingSchema = meetingSchema;

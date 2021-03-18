@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const auth = require('../middlewares/auth');
 const adminAuth = require('../middlewares/adminAuth');
+const studentAuth = require('../middlewares/studentAuth');
 const { Section } = require('../models/section');
 const router = express.Router();
 
@@ -27,5 +28,12 @@ router.post('/', [auth, adminAuth] , async (req, res) => {
         console.log(err);
     }
 });
-
+router.get('/:section',[auth,adminAuth], async (req,res) => {
+    const students = await Section.findById(req.params.section,'studentList').populate('studentList','name email');
+    res.send(students);
+});
+router.get('/',[auth,studentAuth], async (req,res) => {
+    const studentInfo = await Student.findById(req.user._id,'-password');
+    res.send(studentInfo);
+});
 module.exports = router;

@@ -30,7 +30,7 @@ const studentSchema = new mongoose.Schema({
     }
 });
 studentSchema.methods.generateAuthToken = function() { 
-    const token = jwt.sign({ _id: this._id, isStudent: true }, config.get('jwtPrivateKey'));
+    const token = jwt.sign({ _id: this._id, isStudent: true, section: this.section }, config.get('jwtPrivateKey'));
     return token;
   }
 const Student = mongoose.model('Student', studentSchema);
