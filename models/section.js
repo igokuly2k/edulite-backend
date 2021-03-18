@@ -9,12 +9,14 @@ const sectionSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 50
     },
-    meetingList: {
-        type: [meetingSchema]
-    },
-    studentList: {
-        type: [studentSchema]
-    }
+    meetingList: [{
+        type: mongoose.Types.ObjectId,
+        ref: "Meeting"
+    }],
+    studentList: [{
+        type: mongoose.Types.ObjectId,
+        ref: "Student"
+    }]
 });
 const Section = mongoose.model('Section', sectionSchema);
 

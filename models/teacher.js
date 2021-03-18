@@ -25,12 +25,10 @@ const teacherSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 1024
     },
-    sectionList: {
-        type: [sectionSchema]
-    },
-    meetingList: {
-        type: [meetingSchema]
-    }
+    sectionList: [{
+        type: mongoose.Types.ObjectId, ref:'Section'}],
+      meetingList: [{
+        type: mongoose.Types.ObjectId, ref:'Meeting'}]
 });
 teacherSchema.methods.generateAuthToken = function() { 
     const token = jwt.sign({ _id: this._id, isTeacher: true }, config.get('jwtPrivateKey'));

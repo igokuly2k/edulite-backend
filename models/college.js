@@ -13,12 +13,11 @@ const collegeSchema = new mongoose.Schema({
     trim: true,
     lowercase: true
   },
-  sectionList: {
-    type: [sectionSchema]
-  },
-  teacherList: {
-    type: [teacherSchema]
-  }
+  sectionList: [{
+    type: mongoose.Types.ObjectId, ref:'Section'}],
+  teacherList: [{
+    type: mongoose.Types.ObjectId, ref:'Teacher'}]
+
 });
 const College = mongoose.model('College', collegeSchema);
 
@@ -30,4 +29,4 @@ function validateCollege(college) {
 }
 
 exports.College = College;
-exports.validate = validateCollege;
+exports.validateCollege = validateCollege;

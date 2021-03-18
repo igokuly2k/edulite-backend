@@ -6,7 +6,6 @@ const express = require('express');
 const app = express();
 const admins = require('./routes/admins');
 const adminLogin = require('./routes/adminLogin');
-const colleges = require('./routes/colleges');
 const meetings = require('./routes/meetings');
 const sections = require('./routes/sections');
 const studentLogin = require('./routes/studentLogin');
@@ -43,7 +42,6 @@ app.use('/api/teachers',teachers);
 app.use('/api/students',students);
 app.use('/api/sections',sections);
 app.use('/api/meetings',meetings);
-app.use('/api/colleges',colleges);
 
 //SETTING PORT FROM ENV AND LISTENING TO PORT 
 if(!(PORT = config.get('PORT'))){

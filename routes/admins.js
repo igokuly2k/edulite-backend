@@ -9,6 +9,8 @@ router.post('/', async (req, res) => {
     try {
         const { error } = validate(req.body);
         if (error) return res.status(400).send(error.details[0].message);
+        const { errorCollege } = validateCollege({name: req.body.inst_name});
+        if (errorCollege) return res.status(400).send(errorCollege.details[0].message);
         let admin = await Admin.findOne({ $or: [{ email: req.body.email }, { inst_name: req.body.inst_name }] });
         if (admin) return res.status(400).send("Already User Exists");
 

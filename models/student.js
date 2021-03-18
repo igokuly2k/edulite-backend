@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('config');
-const Joi = require('joi');
+const Joi = require('joi-oid');
 const jwt = require('jsonwebtoken');
 
 const studentSchema = new mongoose.Schema({
@@ -22,6 +22,11 @@ const studentSchema = new mongoose.Schema({
         required: true,
         minlength: 5,
         maxlength: 1024
+    },
+    section: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Section',
+        required: true
     }
 });
 studentSchema.methods.generateAuthToken = function() { 
@@ -34,7 +39,8 @@ function validateStudent(student) {
     const schema = Joi.object({
         name: Joi.string().min(5).max(50).required(),
         email: Joi.string().min(5).max(255).required().email(),
-        password: Joi.string().min(5).max(255).required()
+        password: Joi.string().min(5).max(255).required(),
+        section: Joi.objectId()
     });
     return schema.validate(student);
 }
